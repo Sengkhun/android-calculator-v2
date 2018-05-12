@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView displayTextView;
+    private TextView displayTextView, displayDescription;
     private String result;
     private CalculatorMind cal;
 
@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
         cal = new CalculatorMind();
         displayTextView = (TextView) findViewById(R.id.result);
+        displayDescription = (TextView) findViewById(R.id.description);
 
     }
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         result = cal.operation( currentOp );
         displayTextView.setText( result );
+        displayDescription.setText( cal.getDescription() );
 
     }
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         result = cal.typeDigit( currentType );
         displayTextView.setText( result );
+        displayDescription.setText( cal.getDescription() );
 
     }
 
@@ -58,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         cal.clear();
         displayTextView.setText("0");
+        displayDescription.setText("0");
 
     }
 

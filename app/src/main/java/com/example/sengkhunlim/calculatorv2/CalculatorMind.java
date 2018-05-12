@@ -3,13 +3,13 @@ package com.example.sengkhunlim.calculatorv2;
 public class CalculatorMind {
 
     private Double preResult;
-    private String currentDisplay, lastOp;
+    private String currentDisplay, description, lastOp;
     private Boolean clear, pressed;
 
     public CalculatorMind() {
 
         preResult = 0.0;
-        currentDisplay = "0";
+        currentDisplay = description = "0";
         lastOp = "";
         clear = pressed = false;
 
@@ -21,9 +21,10 @@ public class CalculatorMind {
         if ( !pressed )
             preResult = calculate( preResult, Double.parseDouble( currentDisplay ), lastOp );
 
+        handleDescription(op);
+
         lastOp = op;
         clear = pressed = true;
-
         currentDisplay = fmt( preResult );
 
         if ( op.equals( "=" ) ) {
@@ -34,6 +35,36 @@ public class CalculatorMind {
         }
 
         return currentDisplay;
+
+    }
+
+    public void handleDescription(String op) {
+
+        // if the description = 0, we set it to empty
+        if ( description.equals( "0" ) )
+            description = "";
+
+        if ( !lastOp.equals( "=" ) ) {
+
+            if ( pressed ) {
+
+                // Delete the last operation in description
+                description = description.substring(0, description.length() - 3);
+
+            } else {
+
+                description += currentDisplay;
+
+            }
+
+            if ( !op.equals( "=" ) )
+                description += " " + op + " ";
+
+        } else {
+
+            description = currentDisplay + " " + op + " ";
+
+        }
 
     }
 
@@ -66,9 +97,12 @@ public class CalculatorMind {
     // Function that handle the button number
     public String typeDigit( String digit ) {
 
+        String newTextInDisplay;
         pressed = false;
 
-        String newTextInDisplay;
+        // if the user click =, we reset the description as empty
+        if (lastOp.equals("="))
+            this.description = "0";
 
         if ( currentDisplay.equals( "0" ) )
             currentDisplay = "";
@@ -93,6 +127,10 @@ public class CalculatorMind {
 
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
     // Function that handle the dot sign
     public String dot() {
 
@@ -113,6 +151,7 @@ public class CalculatorMind {
 
         preResult = 0.0;
         currentDisplay = "0";
+        description = "0";
         lastOp = "";
         clear = pressed = false;
 
